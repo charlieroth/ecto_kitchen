@@ -7,7 +7,7 @@ defmodule EctoKitchen.Post do
   schema "posts" do
     field(:author, :string)
     field(:title, :string)
-    field(:page_views, :integer)
+    field(:page_views, :integer, default: 0)
 
     timestamps()
   end
