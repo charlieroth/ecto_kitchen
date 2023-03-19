@@ -8,8 +8,7 @@ defmodule EctoKitchen.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: EctoKitchen.Worker.start_link(arg)
-      # {EctoKitchen.Worker, arg}
+      EctoKitchen.Repo
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
