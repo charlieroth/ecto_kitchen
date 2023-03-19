@@ -1,6 +1,7 @@
 defmodule EctoKitchen.Post do
   use Ecto.Schema
   import Ecto.Changeset
+  alias EctoKitchen.Comment
 
   @primary_key {:id, :binary_id, autogenerate: true}
 
@@ -8,6 +9,8 @@ defmodule EctoKitchen.Post do
     field(:author, :string)
     field(:title, :string)
     field(:page_views, :integer, default: 0)
+
+    has_many(:comment, Comment)
 
     timestamps()
   end
