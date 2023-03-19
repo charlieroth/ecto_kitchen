@@ -1,10 +1,13 @@
 defmodule EctoKitchen.Post do
   use Ecto.Schema
+  import Ecto.Changeset
+
+  @primary_key {:id, :binary_id, autogenerate: true}
 
   schema "posts" do
-    field(:author)
-    field(:title)
-    field(:page_views, default: 0)
+    field(:author, :string)
+    field(:title, :string)
+    field(:page_views, :integer)
 
     timestamps()
   end
@@ -13,6 +16,6 @@ defmodule EctoKitchen.Post do
   def changeset(post, params \\ %{}) do
     post
     |> cast(params, [:author, :title, :page_views])
-    |> validate_required(params, [:author, :title])
+    |> validate_required([:author, :title])
   end
 end
