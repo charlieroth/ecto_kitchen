@@ -51,3 +51,21 @@ MyApp.Repo.insert_all(
   ]
 )
 ```
+
+With `update_all/3` you can update multiple entries at once in a repository:
+
+```elixir
+MyApp.Repo.update_all(
+  from(p in Post, where: [id: ^post.id]),
+  set: [title: "hello"]
+)
+```
+
+With `delete_all/2` you can delete multiple entries at once from a repository:
+
+```elixir
+MyApp.Repo.delete_all(
+  from(p in Post, where: [id: ^post.id]),
+  []
+)
+```
