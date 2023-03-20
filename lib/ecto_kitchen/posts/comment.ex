@@ -1,4 +1,4 @@
-defmodule EctoKitchen.Comment do
+defmodule EctoKitchen.Posts.Comment do
   use Ecto.Schema
   import Ecto.Changeset
   alias EctoKitchen.Post

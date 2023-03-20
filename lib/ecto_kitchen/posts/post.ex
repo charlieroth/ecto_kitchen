@@ -1,4 +1,4 @@
-defmodule EctoKitchen.Post do
+defmodule EctoKitchen.Posts.Post do
   use Ecto.Schema
   import Ecto.Changeset
   alias EctoKitchen.Comment
@@ -18,7 +18,6 @@ defmodule EctoKitchen.Post do
     timestamps()
   end
 
-  @spec changeset(%EctoKitchen.Post{}, map()) :: Ecto.Changeset.t()
   def changeset(post, params \\ %{}) do
     post
     |> cast(params, [:author, :title, :page_views])

@@ -1,4 +1,4 @@
-defmodule EctoKitchen.Profile do
+defmodule EctoKitchen.Accounts.Profile do
   use Ecto.Schema
   import Ecto.Changeset
 

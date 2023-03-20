@@ -1,4 +1,4 @@
-defmodule EctoKitchen.Registration do
+defmodule EctoKitchen.Accounts.Registration do
   use Ecto.Schema
   import Ecto.Changeset
 
