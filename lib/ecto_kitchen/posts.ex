@@ -56,4 +56,15 @@ defmodule EctoKitchen.Posts do
     query = from(p in Post, where: [id: ^post.id])
     Repo.delete_all(query, [])
   end
+
+  def recent_category_posts_from_author(author, category, published_at) do
+    query =
+      Post
+      |> where(author: ^author)
+      |> where(category: ^category)
+      |> where([p], p.published_at > ^published_at)
+      |> order_by(desc: :published_at)
+
+    Repo.all(query, [])
+  end
 end
