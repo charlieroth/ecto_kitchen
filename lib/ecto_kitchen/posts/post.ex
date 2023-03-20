@@ -1,7 +1,7 @@
 defmodule EctoKitchen.Posts.Post do
   use Ecto.Schema
   import Ecto.Changeset
-  alias EctoKitchen.Comment
+  alias EctoKitchen.Posts.Comment
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -20,7 +20,7 @@ defmodule EctoKitchen.Posts.Post do
 
   def changeset(post, params \\ %{}) do
     post
-    |> cast(params, [:author, :title, :page_views])
+    |> cast(params, [:author, :title, :page_views, :category, :published_at])
     |> validate_required([:author, :title])
   end
 end
