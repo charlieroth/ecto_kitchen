@@ -1,6 +1,6 @@
 defmodule EctoKitchen do
   import Ecto.Query
-  alias EctoKitchen.{Post, Comment}
+  alias EctoKitchen.{Post, Profile, Account, Registration}
   alias EctoKitchen.Repo
 
   def create_posts_from_keyword_list(posts_keyword_list) do
@@ -55,5 +55,33 @@ defmodule EctoKitchen do
   def delete_post(post) do
     query = from(p in Post, where: [id: ^post.id])
     Repo.delete_all(query, [])
+  end
+
+  def complete_registration(form_params) do
+    changeset = Registration.changeset(%Registration{}, form_params)
+
+    if changeset.valid?() do
+      registration = Ecto.Changeset.apply_changes(changeset)
+      profile = to_profile(registration)
+      account = to_account(registration)
+
+      Ecto.Multi.new()
+      |> Ecto.Multi.insert(:profile, profile)
+      |> Ecto.Multi.insert(:account, account)
+      |> Repo.transaction()
+    else
+      {:error, changeset}
+    end
+  end
+
+  defp to_profile(registration) do
+    %Profile{
+      name: "#{registration.first_name} #{registration.last_name}",
+      email: registration.email
+    }
+  end
+
+  defp to_account(registration) do
+    %Account{email: registration.email}
   end
 end
