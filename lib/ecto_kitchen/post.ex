@@ -10,6 +10,8 @@ defmodule EctoKitchen.Post do
     field(:author, :string)
     field(:title, :string)
     field(:page_views, :integer, default: 0)
+    field(:category, :string)
+    field(:published_at, :naive_datetime)
 
     has_many(:comment, Comment)
 
