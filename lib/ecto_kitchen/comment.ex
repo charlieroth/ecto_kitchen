@@ -9,7 +9,7 @@ defmodule EctoKitchen.Comment do
     field(:author, :string)
     field(:text, :string)
 
-    belongs_to(:post, Post)
+    belongs_to(:post, Post, type: :binary_id)
   end
 
   def changeset(comment, params) do

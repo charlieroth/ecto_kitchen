@@ -4,6 +4,7 @@ defmodule EctoKitchen.Post do
   alias EctoKitchen.Comment
 
   @primary_key {:id, :binary_id, autogenerate: true}
+  @foreign_key_type :binary_id
 
   schema "posts" do
     field(:author, :string)
