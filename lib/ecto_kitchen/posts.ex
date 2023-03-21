@@ -67,4 +67,44 @@ defmodule EctoKitchen.Posts do
 
     Repo.all(query, [])
   end
+
+  @doc """
+  A toy example of search functionality using dynamic query builder pattern
+
+  A user can configure how to traverse all posts in many different ways.
+  For example the user may choose how to order the data, filter by author or
+  category, as well as select posts published after a certain date.
+  """
+  def search_posts(params) do
+    Post
+    |> order_by(^filter_order_by(params["order_by"]))
+    |> where(^filter_where(params))
+    |> Repo.all()
+  end
+
+  defp filter_order_by("published_at_desc") do
+    [desc: dynamic([p], p.published_at)]
+  end
+
+  defp filter_order_by("published_at_asc") do
+    [asc: dynamic([p], p.published_at)]
+  end
+
+  defp filter_order_by(_), do: []
+
+  defp filter_where(params) do
+    Enum.reduce(params, dynamic(true), fn
+      {"author", value}, dynamic ->
+        dynamic([p], ^dynamic and p.author == ^value)
+
+      {"category", value}, dynamic ->
+        dynamic([p], ^dynamic and p.category == ^value)
+
+      {"published_at", value}, dynamic ->
+        dynamic([p], ^dynamic and p.published_at > ^value)
+
+      {_, _}, dynamic ->
+        dynamic
+    end)
+  end
 end
