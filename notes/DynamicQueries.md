@@ -34,3 +34,5 @@ Post
 |> where([p], p.published_at > ^minimum_date)
 |> order_by(desc: p.published_at)
 ```
+
+In the above example the `p` selector can be dropped in most expressions. In the case of `where([p], p.published_at > ^minimum_date)`, since we are not doing a data equality assertion, we need to use the `p` selector.
