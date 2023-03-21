@@ -34,7 +34,7 @@ defmodule EctoKitchen.Posts.Post do
   end
 
   @spec parse_tags(map()) :: [%Tag{}]
-  defp parse_tags(params) do
+  def parse_tags(params) do
     (params["tags"] || "")
     |> String.split(",")
     |> Enum.map(&String.trim/1)
@@ -42,15 +42,16 @@ defmodule EctoKitchen.Posts.Post do
     |> Enum.map(&get_or_insert_tag/1)
   end
 
+  @doc """
+  Try to insert a `Tag` with the given name, if same named `Tag` exists, update its name to the
+  current value, updating the tag and fetching its `id`
+  """
   @spec get_or_insert_tag(String.t()) :: %Tag{}
-  defp get_or_insert_tag(name) do
-    %Tag{}
-    |> change(name: name)
-    |> unique_constraint(:name)
-    |> Repo.insert()
-    |> case do
-      {:ok, tag} -> tag
-      {:error, _} -> Repo.get_by!(Tag, name: name)
-    end
+  def get_or_insert_tag(name) do
+    Repo.insert!(
+      %Tag{},
+      on_conflict: [set: [name: name]],
+      conflict_target: [:name]
+    )
   end
 end
