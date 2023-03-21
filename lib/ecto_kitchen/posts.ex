@@ -107,4 +107,18 @@ defmodule EctoKitchen.Posts do
         dynamic
     end)
   end
+
+  def average_page_views() do
+    Post |> Repo.aggregate(:avg, :page_views)
+  end
+
+  def top_average_page_views(limit) do
+    query =
+      from(Post,
+        order_by: [desc: :page_views],
+        limit: ^limit
+      )
+
+    Repo.aggregate(query, :avg, :page_views)
+  end
 end
