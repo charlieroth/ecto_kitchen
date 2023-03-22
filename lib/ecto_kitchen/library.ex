@@ -1,5 +1,4 @@
 defmodule EctoKitchen.Library do
-  import Ecto.Query
   alias EctoKitchen.Library.{Book, Visitor, Lendor}
   alias EctoKitchen.Repo
 
